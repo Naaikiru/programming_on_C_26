@@ -49,83 +49,42 @@ int main()
 		printf("choose %d parameter(s): ", hop);
 		scanf(" %c", &op);
 	}
-	
-    if (op == 'N')
-    {
-        for (i = 0; i < count - 1; i++)
-        {
-            for (j = 0; j < count - 1 - i; j++)
-            {
-                if (strcmp(kek[j].name, kek[j + 1].name) > 0)
-                {
-                    struct humen meow = kek[j];
-                    kek[j] = kek[j + 1];
-                    kek[j + 1] = meow; 
-                }
-            }
-        }
-    }
+	for (i = 0; i < count - 1; i++)
+	{
+		for (j = 0; j < count - i - 1; j ++)
+		{
+			int nchange = 0;
+			if (op == 'N')
+			{
+				if (strcmp(kek[j].name, kek[j + 1].name) > 0);
+			}
 
-    else if (op == 'L')
-    {
-        for (i = 0; i < count - 1; i++)
-        {
-            for (j = 0; j < count - 1 - i; j++)
-            {
-                if (strcmp(kek[j].lastn, kek[j + 1].lastn) > 0)
-                {
-                    struct humen meow = kek[j];
-                    kek[j] = kek[j + 1];
-                    kek[j + 1] = meow; 
-                }
-            }
-        }
-    }
+			else if (op == 'L')
+			{
+				if (strcmp(kek[j].lastn, kek[j + 1].lastn) > 0);
+			}
 
-    else if (op == 'B')
-    {
-        for (i = 0; i < count - 1; i++)
-        {
-            for (j = 0; j < count - 1 - i; j++)
-            {
-                if (kek[j].bthd < kek[j + 1].bthd)
-                {
-                    struct humen meow = kek[j];
-                    kek[j] = kek[j + 1];
-                    kek[j + 1] = meow; 
-                }
-            }
-        }
-    }
+			else if (op == 'B')
+			{
+				if (kek[j].bthd < kek[j + 1].bthd);
+			}
 
-    else if (op == 'G')
-    {
-        for (i = 0; i < count - 1; i++)
-        {
-            for (j = 0; j < count - 1 - i; j++)
-            {
-                if (kek[j].gendr[0] > kek[j + 1].gendr[0])
-                {
-                    struct humen meow = kek[j];
-                    kek[j] = kek[j + 1];
-                    kek[j + 1] = meow; 
-                }
-            }
-        }
-    }
-        
-    else if (op == 'H')
-    {
-        for (i = 0; i < count - 1; i++)
-        {
-            for (j = 0; j < count - 1 - i; j++)
-            {
-                if (kek[j].hght < kek[j + 1].hght)
-                {
-                    struct humen meow = kek[j];
-                    kek[j] = kek[j + 1];
-                    kek[j + 1] = meow; 
-                }
+			else if (op == 'G')
+			{
+				if (kek[j].gendr[0] > kek[j + 1].gendr[0]);
+			}
+				
+			else if (op == 'H')
+			{
+				if (kek[j].hght < kek[j + 1].hght);
+			}
+
+
+			if (nchange == 1)
+			{
+                struct humen meow = kek[j];
+                kek[j] = kek[j + 1];
+                kek[j + 1] = meow;
             }
         }
     }
