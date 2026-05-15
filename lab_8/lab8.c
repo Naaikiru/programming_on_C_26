@@ -38,9 +38,9 @@ int main()
 		fscanf(f2, "%s %s %d %s %d", kek[i].name, kek[i].lastn, kek[i].bthd, kek[i].gendr, kek[i].hght);
 	}
 
-	for (i = 0; i < count; i++)
+	for (j = 0; j < count; j++)
 	{
-		printf("%s %s %d %s %d\n", kek[i].name, kek[i].lastn, kek[i].bthd, kek[i].gendr, kek[i].hght);
+		printf("%s %s %d %s %d\n", kek[j].name, kek[j].lastn, kek[j].bthd, kek[j].gendr, kek[j].hght);
 	}
 
     return 0;
