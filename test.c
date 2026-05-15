@@ -3,8 +3,8 @@
 #include <string.h>
 
 // Макрос для нахождения максимального числа в массиве
-#define MAX_NUMBER(arr, n) ({ \
-    typeof(*(arr)) _max = (arr)[0]; \
+#define MAX(arr, n) ({ \
+    typeof(*(arr))0 _max = (arr)[0]; \
     for(int _i = 1; _i < (n); _i++) { \
         if((arr)[_i] > _max) _max = (arr)[_i]; \
     } \
@@ -34,7 +34,7 @@ int main() {
     }
     
     // Используем макрос для нахождения максимального числа
-    int max = MAX_NUMBER(numbers, count);
+    int max = MAX(numbers, count);
     
     printf("Максимальное число: %d\n", max);
     

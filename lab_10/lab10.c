@@ -6,20 +6,27 @@
 
 int main() {
     char stroka[512];
-    int numbers[100];
-    int i;
-    int cunt;
+    int chi[100];
+    int i, cunt, maxchi;
+    char *vrem;
 
     printf("if you wanna enter a chisla, so you need to give me a count: ");
     scanf("%d", &cunt);
+
+    getchar();
     
     printf("enter chisla with probel: ");
-    for (i = 0; i < cunt; i++)
+    fgets(stroka, sizeof(stroka), stdin);
+
+    vrem = strtok(stroka, " \t\n");
+    for (i = 0; i < cunt && vrem != NULL; i++)
     {
-        scanf(" %c", &stroka);
+        chi[i] = atoi(vrem);
+        vrem = strtok(NULL, " \t\n");
     }
 
-    
+    maxchi = MAX_CHISLO(chi, cunt);
+    printf("max chislo: %d", maxchi);
     
     return 0;
 }
