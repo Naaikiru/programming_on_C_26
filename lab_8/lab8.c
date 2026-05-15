@@ -110,7 +110,7 @@ int main()
 						nchange = 1;
 						break;
 					}
-					else
+					else if (kek[j].gendr[0] > kek[j + 1].gendr[0])
 					{
 						nchange = 0;
 						break;
@@ -124,7 +124,7 @@ int main()
 						nchange = 1;
 						break;
 					}
-					else
+					else if (kek[j].hght < kek[j + 1].hght)
 					{
 						nchange = 0;
 						break;
