@@ -29,7 +29,19 @@ int main()
     struct humen *kek;
 	kek = (struct humen*)malloc(count*sizeof(struct humen));
 
-	
+	int i, j;
+
+	FILE * f2 = fopen("info_about_you.txt", "r");
+
+	for (i = 0; i < count; i++)
+	{
+		fscanf(f2, "%s %s %d %s %d", kek[i].name, kek[i].lastn, kek[i].bthd, kek[i].gendr, kek[i].hght);
+	}
+
+	for (i = 0; i < count; i++)
+	{
+		printf("%s %s %d %s %d\n", kek[i].name, kek[i].lastn, kek[i].bthd, kek[i].gendr, kek[i].hght);
+	}
 
     return 0;
 }
