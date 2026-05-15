@@ -109,7 +109,7 @@ int main()
                 }
             }
             
-            if (should_swap)
+            if (should_swap == 1)
             {
                 struct humen meow = kek[j];
                 kek[j] = kek[j + 1];
