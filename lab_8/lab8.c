@@ -26,7 +26,10 @@ int main()
     }
 	fclose(f1);
 
-    
+    struct humen *kek;
+	kek = (struct humen*)malloc(count*sizeof(struct humen));
+
+	
 
     return 0;
 }
