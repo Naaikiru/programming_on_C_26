@@ -1,49 +1,93 @@
+#include "lab55.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-struct humen
+int **sum(int **M1, int **M2, int size)
 {
-	char name[20];
-	char lastn[20];
-	int bthd;
-    char gendr[20];
-    double hght;
-};
+    int x, y;
+    int **MM;
 
-
-int main()
-{
-    int count = 0;
-	char bff[256];
-	FILE * f1 = fopen("info_about_you.txt", "r");
-	while (fgets(bff, sizeof(bff), f1) != NULL) 
-	{
-        if (strlen(bff) > 1) 
-		{
-            count++;
+    MM=(int**)malloc(size*sizeof(int*));
+    for(x=0;x<size;x++)
+    {
+        MM[x]= (int*)malloc(size*sizeof(int));
+    }
+    for (x = 0; x < size; x++)
+    {
+        for (y = 0; y < size; y++)
+        {
+            MM[x][y] = M1[x][y] + M2[x][y];
         }
     }
-	fclose(f1);
+    return MM;
+}
 
-    struct humen *kek;
-	kek = (struct humen*)malloc(count*sizeof(struct humen));
+int **sub(int **M1, int **M2, int size)
+{
+    int x, y;
+    int **MM;
 
-	int i, j;
+    MM=(int**)malloc(size*sizeof(int*));
+    for(x=0;x<size;x++)
+    {
+        MM[x]= (int*)malloc(size*sizeof(int));
+    }
+    for (x = 0; x < size; x++)
+    {
+        for (y = 0; y < size; y++)
+        {
+            MM[x][y] = M1[x][y] - M2[x][y];
+        }
+    }
+    return MM;
+}
 
-	FILE * f2 = fopen("info_about_you.txt", "r");
+int **mult(int **M1, int **M2, int size)
+{
+    int x, y, s;
+    int **MM;
 
-	for (i = 0; i < count; i++)
-	{
-		fscanf(f2, "%s %s %d %s %lf", kek[i].name, kek[i].lastn, &kek[i].bthd, kek[i].gendr, &kek[i].hght);
-	}
-	fclose(f2);
+    MM=(int**)malloc(size*sizeof(int*));
+    for(x=0;x<size;x++)
+    {
+        MM[x]= (int*)malloc(size*sizeof(int));
+    }
+    for (x = 0; x < size; x++)
+    {
+        for (y = 0; y < size; y++)
+        {
+            MM[x][y] = 0;
+            for (s = 0; s < size; s++)
+            {
+                MM[x][y] += M1[x][s] + M2[s][y];
+            }
+        }
+    }
+    return MM;
+}
 
-	for (i = 0; i < count; i++)
-	{
-		printf("%s %s %d %s %g\n", kek[i].name, kek[i].lastn, kek[i].bthd, kek[i].gendr, kek[i].hght);
-	}
+void scnfm(int **M, int size)
+{
+    int x, y;
+    for (x = 0; x < size; x++)
+    {
+        for (y = 0; y < size; y++)
+        {
+            printf("[%d][%d] = ", x, y);
+            scanf("%d", &M[x][y]);
+        }
+    }
+}
 
-	free(kek);
-    return 0;
+void showm(int **M, int size)
+{
+    int x, y;
+    printf("the result of operation: \n");
+    for (x = 0; x < size; x++)
+    {
+        for (y = 0; y < size; y++)
+        {
+            printf(" %d", M[x][y]);
+        }
+    }
 }
