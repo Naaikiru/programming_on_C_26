@@ -2,134 +2,41 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct humen
-{
-    char name[20];
-    char lastn[20];
-    int bthd;
-    char gendr[20];
-    double hght;
-};
+// Макрос для нахождения максимального числа в массиве
+#define MAX_NUMBER(arr, n) ({ \
+    typeof(*(arr)) _max = (arr)[0]; \
+    for(int _i = 1; _i < (n); _i++) { \
+        if((arr)[_i] > _max) _max = (arr)[_i]; \
+    } \
+    _max; \
+})
 
-int main()
-{
+int main() {
+    char input[1000];
+    int numbers[100];
     int count = 0;
-    char bff[256];
+    char *token;
     
-    FILE * f1 = fopen("info_about_you.txt", "r");
-    if (f1 == NULL) {
-        printf("Ошибка открытия файла!\n");
+    printf("Введите числа через пробел: ");
+    fgets(input, sizeof(input), stdin);
+    
+    // Разбиваем строку на токены и преобразуем в числа
+    token = strtok(input, " \t\n");
+    while(token != NULL && count < 100) {
+        numbers[count] = atoi(token);
+        count++;
+        token = strtok(NULL, " \t\n");
+    }
+    
+    if(count == 0) {
+        printf("Числа не введены.\n");
         return 1;
     }
     
-    while (fgets(bff, sizeof(bff), f1) != NULL) 
-    {
-        if (strlen(bff) > 1) 
-        {
-            count++;
-        }
-    }
-    fclose(f1);
-
-    struct humen *kek;
-    kek = (struct humen*)malloc(count * sizeof(struct humen));
-
-    int i, j;
-
-    FILE * f2 = fopen("info_about_you.txt", "r");
-    if (f2 == NULL) {
-        printf("Ошибка открытия файла!\n");
-        free(kek);
-        return 1;
-    }
-
-    for (i = 0; i < count; i++)
-    {
-        fscanf(f2, "%s %s %d %s %lf", 
-               kek[i].name, 
-               kek[i].lastn, 
-               &kek[i].bthd, 
-               kek[i].gendr, 
-               &kek[i].hght);
-    }
-    fclose(f2);
-
-    int hop;
-    char params[10];  // массив для хранения параметров
+    // Используем макрос для нахождения максимального числа
+    int max = MAX_NUMBER(numbers, count);
     
-    printf("Organization parameter: Name(N), Lastname(L), Bday(B), Gender(G), Height(H)\n");
-    printf("How many options you wanna choose: ");
-    scanf("%d", &hop);  // исправлено: %d
+    printf("Максимальное число: %d\n", max);
     
-    printf("Enter %d parameter(s) (N/L/B/G/H): ", hop);
-    for (int p = 0; p < hop; p++)
-    {
-        scanf(" %c", &params[p]);  // исправлено: пробел перед %c
-    }
-    
-    // СОРТИРОВКА ПО ВСЕМ ПАРАМЕТРАМ СРАЗУ
-    for (i = 0; i < count - 1; i++)
-    {
-        for (j = 0; j < count - 1 - i; j++)
-        {
-            int should_swap = 0;
-            
-            // Проверяем параметры в порядке приоритета
-            for (int p = 0; p < hop; p++)
-            {
-                char op = params[p];
-                
-                if (op == 'N')  // по имени
-                {
-                    int cmp = strcmp(kek[j].name, kek[j+1].name);
-                    if (cmp > 0) { should_swap = 1; break; }
-                    if (cmp < 0) { should_swap = 0; break; }
-                    // если равны, продолжаем со следующим параметром
-                }
-                else if (op == 'L')  // по фамилии
-                {
-                    int cmp = strcmp(kek[j].lastn, kek[j+1].lastn);
-                    if (cmp > 0) { should_swap = 1; break; }
-                    if (cmp < 0) { should_swap = 0; break; }
-                }
-                else if (op == 'B')  // по году рождения
-                {
-                    if (kek[j].bthd < kek[j+1].bthd) { should_swap = 1; break; }
-                    if (kek[j].bthd > kek[j+1].bthd) { should_swap = 0; break; }
-                }
-                else if (op == 'G')  // по полу
-                {
-                    if (kek[j].gendr[0] > kek[j+1].gendr[0]) { should_swap = 1; break; }
-                    if (kek[j].gendr[0] < kek[j+1].gendr[0]) { should_swap = 0; break; }
-                }
-                else if (op == 'H')  // по росту
-                {
-                    if (kek[j].hght < kek[j+1].hght) { should_swap = 1; break; }
-                    if (kek[j].hght > kek[j+1].hght) { should_swap = 0; break; }
-                }
-            }
-            
-            if (should_swap == 1)
-            {
-                struct humen meow = kek[j];
-                kek[j] = kek[j + 1];
-                kek[j + 1] = meow;
-            }
-        }
-    }
-    
-    
-    
-    for (i = 0; i < count; i++)
-    {
-        printf("%s %s %d %s %g\n", 
-               kek[i].name, 
-               kek[i].lastn, 
-               kek[i].bthd, 
-               kek[i].gendr, 
-               kek[i].hght);
-    }
-
-    free(kek);
     return 0;
 }
