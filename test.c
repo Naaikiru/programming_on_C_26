@@ -1,64 +1,15 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-struct humen
-{
-	char name[20];
-	char lastn[20];
-	int bthd;
-};
-
-int main() 
-{
-	int chlen;
-
-	FILE * f1 = fopen("nlnage.txt", "r");
-	
-	
-	struct humen *kek;
-    kek = (int*)malloc(chlen*sizeof(struct humen));
-	
-    struct humen *lol;
-    lol = (int*)malloc(chlen*sizeof(struct humen));
-    
-	fclose(f1);
-	int i, j;
-
-    FILE * f1 = fopen("nlnage.txt", "r");
-    
-    for(i = 0; i < chlen; i++)
-    {
-        fscanf(f1, "%s %s %d", kek[i].name, kek[i].lastn, &kek[i].bthd);
-    }
-
-    fclose(f1);
-
-    for (i = 0; i < chlen; i++) 
-    {
-        lol[i] = kek[i];
-    }
-
-    for(i = 0; i < chlen - 1; i++)
-    {
-        for (j = 0; j < chlen - 1 - i; j++)
-        {
-            if (lol[j].bthd < lol[j + 1].bthd)
-            {
-                struct humen meow = lol[j];
-                lol[j] = lol[j + 1];
-                lol[j + 1] = meow;
-            }
-        }
-    }
-    
-    for(j = 0; j < chlen; j++)
-    {
-    	printf("%s %s %d\n", lol[j].name, lol[j].lastn, lol[j].bthd);
-	}
-	
-	free(kek);
-	free(lol);
-	
-	return 0;
-}
+John Smith 1995 Male 1.85
+Emily Johnson 1988 Female 1.68
+Michael Brown 2000 Male 1.78
+Sarah Davis 1975 Female 1.65
+David Wilson 1992 Male 1.82
+Jessica Martinez 1985 Female 1.70
+Daniel Taylor 1998 Male 1.75
+Lisa Anderson 1990 Female 1.72
+James Thomas 1982 Male 1.88
+Maria Jackson 1995 Female 1.63
+Robert White 1970 Male 1.80
+Patricia Harris 2001 Female 1.67
+Thomas Martin 1987 Male 1.77
+Jennifer Thompson 1993 Female 1.69
+Charles Garcia 1980 Male 1.84
