@@ -39,46 +39,98 @@ int main()
 	}
 	fclose(f2);
 
-	char op[20];
+	char ops[20];
 	int hop;
 	printf("Organization parameter: Name/Lastname, Bday, Gender, Height (only capital letters & u can use several options)\n");
 	printf("How many options you wanna choose: ");
 	scanf("%d", &hop);
+	
+	printf("choose %d parameter(s): ", hop);
 	for (j = 0; j < hop; j++)
 	{
-		printf("choose %d parameter(s): ", hop);
-		scanf(" %c", &op);
+		scanf(" %c", &ops[j]);
 	}
 	for (i = 0; i < count - 1; i++)
 	{
 		for (j = 0; j < count - i - 1; j ++)
 		{
 			int nchange = 0;
-			if (op == 'N')
+			int l;
+			for (l = 0; l < hop; l++)
 			{
-				if (strcmp(kek[j].name, kek[j + 1].name) > 0);
-			}
+				char op = ops[l];
+				if (op == 'N')
+				{
+					int con = (strcmp(kek[j].name, kek[j + 1].name) > 0);
+					if (con < 0)
+					{
+						nchange = 0;
+						break;
+					}
+					if (con > 0)
+					{
+						nchange = 1;
+						break;
+					}
+				}
 
-			else if (op == 'L')
-			{
-				if (strcmp(kek[j].lastn, kek[j + 1].lastn) > 0);
-			}
+				else if (op == 'L')
+				{
+					int con = (strcmp(kek[j].lastn, kek[j + 1].lastn) > 0);
+					if (con < 0)
+					{
+						nchange = 0;
+						break;
+					}
+					if (con > 0)
+					{
+						nchange = 1;
+						break;
+					}
+				}
 
-			else if (op == 'B')
-			{
-				if (kek[j].bthd < kek[j + 1].bthd);
-			}
+				else if (op == 'B')
+				{
+					if (kek[j].bthd < kek[j + 1].bthd)
+					{
+						nchange = 1;
+						break;
+					}
+					else if (kek[j].bthd < kek[j + 1].bthd)
+					{
+						nchange = 0;
+						break;
+					}
+				}
 
-			else if (op == 'G')
-			{
-				if (kek[j].gendr[0] > kek[j + 1].gendr[0]);
+				else if (op == 'G')
+				{
+					if (kek[j].gendr[0] > kek[j + 1].gendr[0])
+					{
+						nchange = 1;
+						break;
+					}
+					else
+					{
+						nchange = 0;
+						break;
+					}
+				}
+					
+				else if (op == 'H')
+				{
+					if (kek[j].hght < kek[j + 1].hght)
+					{
+						nchange = 1;
+						break;
+					}
+					else
+					{
+						nchange = 0;
+						break;
+					}
+				}
 			}
-				
-			else if (op == 'H')
-			{
-				if (kek[j].hght < kek[j + 1].hght);
-			}
-
 
 			if (nchange == 1)
 			{
