@@ -89,20 +89,6 @@ int main()
 					}
 				}
 
-				else if (op == 'B')
-				{
-					if (kek[j].bthd < kek[j + 1].bthd)
-					{
-						nchange = 1;
-						break;
-					}
-					else if (kek[j].bthd < kek[j + 1].bthd)
-					{
-						nchange = 0;
-						break;
-					}
-				}
-
 				else if (op == 'G')
 				{
 					if (kek[j].gendr[0] > kek[j + 1].gendr[0])
@@ -111,6 +97,20 @@ int main()
 						break;
 					}
 					else if (kek[j].gendr[0] > kek[j + 1].gendr[0])
+					{
+						nchange = 0;
+						break;
+					}
+				}
+
+				else if (op == 'B')
+				{
+					if (kek[j].bthd < kek[j + 1].bthd)
+					{
+						nchange = 1;
+						break;
+					}
+					else if (kek[j].bthd < kek[j + 1].bthd)
 					{
 						nchange = 0;
 						break;
