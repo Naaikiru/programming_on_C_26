@@ -96,7 +96,7 @@ int main()
 						nchange = 1;
 						break;
 					}
-					else if (kek[j].gendr[0] > kek[j + 1].gendr[0])
+					else if (kek[j].gendr[0] < kek[j + 1].gendr[0])
 					{
 						nchange = 0;
 						break;
@@ -105,7 +105,7 @@ int main()
 
 				else if (op == 'B')
 				{
-					if (kek[j].bthd < kek[j + 1].bthd)
+					if (kek[j].bthd > kek[j + 1].bthd)
 					{
 						nchange = 1;
 						break;
@@ -119,7 +119,7 @@ int main()
 					
 				else if (op == 'H')
 				{
-					if (kek[j].hght < kek[j + 1].hght)
+					if (kek[j].hght > kek[j + 1].hght)
 					{
 						nchange = 1;
 						break;
