@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-main()
+int main()
 {
-    
+
 
     return 0;
 }
