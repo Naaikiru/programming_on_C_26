@@ -6,7 +6,7 @@
 int main()
 {
     printf("|| calculator ||\n");
-    //int i, j;
+    int i, j;
     char stroka[256];
     char *vrem;
 
@@ -14,6 +14,7 @@ int main()
     fgets(stroka, sizeof(stroka), stdin);
 
     vrem = strtok(stroka, " \t\n");
+    
     printf("ok");
     return 0;
 }
