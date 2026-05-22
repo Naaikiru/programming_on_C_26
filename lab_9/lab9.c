@@ -7,7 +7,13 @@ int main()
 {
     printf("|| calculator ||\n");
     int i, j;
+    char stroka[256];
+    char *vrem;
 
+    printf("enter primer with probel: ");
+    fgets(stroka, sizeof(stroka), stdin);
+
+    vrem = strtok(stroka, " \t\n");
 
     return 0;
 }
