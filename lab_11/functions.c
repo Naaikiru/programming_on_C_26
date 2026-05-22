@@ -19,7 +19,7 @@ int summ(int n, ...)
 
 int maxx(int n, ...)
 {
-    int res = 0;
+    int res = INT_MIN;
     va_list list;
     va_start(list, n);
     while(n)
@@ -37,7 +37,7 @@ int maxx(int n, ...)
 
 int minn(int n, ...)
 {
-    int res = 0;
+    int res = INT_MAX;
     va_list list;
     va_start(list, n);
     while(n)
@@ -56,6 +56,7 @@ int minn(int n, ...)
 int srznach(int n, ...)
 {
     int res = 0;
+    int count = n;
     va_list list;
     va_start(list, n);
     while(n)
@@ -63,7 +64,7 @@ int srznach(int n, ...)
         res += va_arg(list, int);
         --n;
     }
-    res = res/n;
+    //int ress = res/n;
     va_end(list);
-    return res;
+    return (int)res/count;
 }
