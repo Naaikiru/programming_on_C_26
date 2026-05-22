@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-int summ(int n, ...);
+int summ(int n, ...)
 {
     int res = 0;
     va_list list;
@@ -17,7 +17,7 @@ int summ(int n, ...);
     return res;
 }
 
-int maxx(int n, ...);
+int maxx(int n, ...)
 {
     int res = 0;
     va_list list;
@@ -35,7 +35,7 @@ int maxx(int n, ...);
     return res;
 }
 
-int minn(int n, ...);
+int minn(int n, ...)
 {
     int res = 0;
     va_list list;
@@ -53,7 +53,7 @@ int minn(int n, ...);
     return res;
 }
 
-int srznach(int n, ...);
+int srznach(int n, ...)
 {
     int res = 0;
     va_list list;
