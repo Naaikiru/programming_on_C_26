@@ -16,5 +16,6 @@ int main()
 
     token = strtok(stroka, " \t\n");
     
+    
     return 0;
 }
