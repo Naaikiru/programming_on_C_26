@@ -7,7 +7,7 @@ int main()
 {
     printf("|| calculator ||\n");
 
-    int i;
+    //int i;
     int frst = 1;
     int minus = 0;
     double res = 0.0;
@@ -40,7 +40,7 @@ int main()
         }
 
         vrem = 0.0;
-        i = 0;
+        //i = 0;
         minus = 0;
 
         if (token[0] == '-')
