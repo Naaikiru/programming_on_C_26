@@ -25,7 +25,7 @@ int main()
         stroka[strlenn-1] = '\0';
     }
 
-    token = strtok(stroka, " \t\n");
+    token = strtok(stroka, " ");
     
     while (token != NULL)
     {
@@ -43,7 +43,7 @@ int main()
         i = 0;
         minus = 0;
 
-        if (token[0] = '-')
+        if (token[0] == '-')
         {
             minus = 1;
             prop = token + 1;
@@ -54,9 +54,9 @@ int main()
         }
 
         vrem = strtod(prop, NULL);
-        if (minus)
+        if (frst)
         {
-            res = vrem;
+            res = -vrem;
             frst = 0;
         }
         else
@@ -73,7 +73,7 @@ int main()
         token = strtok(NULL, " ");
     }
 
-    printf("%s = %lf", stroka, res);
+    printf("= %lf", res);
     
     return 0;
 }
