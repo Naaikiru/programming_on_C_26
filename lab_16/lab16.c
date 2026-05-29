@@ -22,12 +22,13 @@ int bit_double(double num)
         {
             if(numnum[i] & (1 << bit))
             {
-            	cunt++;
-			}
+                cunt++;
+            }
         }
     }
     return cunt;
 }
+
 
 int main()
 {
