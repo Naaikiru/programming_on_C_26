@@ -12,7 +12,7 @@ int main()
     int minus = 0;
     double res = 0.0;
     double vrem;
-    char vremop = '=';
+    char vremop = '+';
     char stroka[256];
     char *token;
     char *prop;
@@ -20,8 +20,38 @@ int main()
     printf("enter primer with probel: ");
     fgets(stroka, sizeof(stroka), stdin);
 
+    size_t strlen(stroka);
+
     token = strtok(stroka, " \t\n");
     
+    while (token != NULL)
+    {
+        if (strlen(token) == 1)
+        {
+            if (token[0] == '+' || token[0] == '-')
+            {
+                vremop = token[0];
+                token = strtok(NULL, " ");
+                continue;
+            }
+        }
+
+        vrem = 0.0;
+        i = 0;
+        minus = 0;
+
+        if (token[0] = '-')
+        {
+            minus = 1;
+            prop = token + 1;
+        }
+        else
+        {
+            prop = token;
+        }
+
+        wrem = 
+    }
     
     return 0;
 }
