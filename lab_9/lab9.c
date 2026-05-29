@@ -53,8 +53,27 @@ int main()
             prop = token;
         }
 
-        wrem = 
+        vrem = strtod(prop, NULL);
+        if (minus)
+        {
+            res = vrem;
+            frst = 0;
+        }
+        else
+        {
+            if (vremop == '+')
+            {
+                res += vrem;
+            }
+            else if (vremop == '-')
+            {
+                res -= vrem;
+            }
+        }
+        token = strtok(NULL, " ");
     }
+
+    printf("%s = %lf", stroka, res);
     
     return 0;
 }
