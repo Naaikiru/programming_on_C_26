@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-// Для double нельзя просто считать биты через деление на 2
-// Поэтому используем union для доступа к битам
 
 int count_bits_in_double(double n)
 {
@@ -26,6 +21,6 @@ int main(int argc, char *argv[])
     printf("n=");
     scanf("%lf", &n);  // %lf для double
     printf("number of bits=%d\n", count_bits_in_double(n)); 
-    system("PAUSE");  
+    //system("PAUSE");  
     return 0;
 }
