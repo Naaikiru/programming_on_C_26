@@ -18,10 +18,6 @@ int main() {
     fgets(input, sizeof(input), stdin);
     
     // Удаляем символ новой строки, если он есть
-    size_t len = strlen(input);
-    if (len > 0 && input[len-1] == '\n') {
-        input[len-1] = '\0';
-    }
     
     // Разбиваем строку на токены
     token = strtok(input, " ");

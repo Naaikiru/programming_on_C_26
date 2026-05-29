@@ -54,9 +54,13 @@ int main()
         }
 
         vrem = strtod(prop, NULL);
+        if (minus)
+        {
+            vrem = -vrem;
+        }
         if (frst)
         {
-            res = -vrem;
+            res = vrem;
             frst = 0;
         }
         else
