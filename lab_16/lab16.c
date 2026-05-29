@@ -3,8 +3,11 @@
 
 int bit_long(long num)
 {
-    if (num == 0) return 0;
-    return (num % 2) + num_bits(num / 2);
+    if (num == 0)
+	{
+		return 0;
+	}
+    return (num % 2) + bit_long(num / 2);
 }   
 
 int bit_double(double num)
@@ -18,7 +21,9 @@ int bit_double(double num)
         for(bit = 0; bit < 8; bit++)
         {
             if(numnum[i] & (1 << bit))
-                cunt++;
+            {
+            	cunt++;
+			}
         }
     }
     return cunt;
