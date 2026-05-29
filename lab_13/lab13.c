@@ -1,35 +1,106 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <signal.h>
 
 void handler(int sig)
 {
-    printf("Signal handler: %d.\n", sig);
+    if (sig == SIGABRT)
+    {
+        printf("Signal handler SIGABRT: %d.\n", sig);
+    }
+    else if (sig == SIGFPE)
+    {
+        printf("Signal handler SIGFPE: %d.\n", sig);
+    }
+    else if (sig == SIGILL)
+    {
+        printf("Signal handler SIGILL: %d.\n", sig);
+    }
+    else if (sig == SIGINT)
+    {
+        printf("Signal handler SIGINT: %d.\n", sig);
+    }
+    else if (sig == SIGSEGV)
+    {
+        printf("Signal handler SIGSEGV: %d.\n", sig);
+    }
+    else if (sig == SIGTERM)
+    {
+        printf("Signal handler SIGTERM: %d.\n", sig);
+    }
 }
 
 int main(void)
 {
-    void (*f) (int); /* указатель на обработчик */
+    int chc;
 
-    signal(SIGTERM, handler);
+    printf("choose SIGNALS!\n");
+    printf("1 - SIGABRT\n");
+    printf("2 - SIGFPE\n");
+    printf("3 - SIGILL\n");
+    printf("4 - SIGINT\n");
+    printf("5 - SIGSEGV\n");
+    printf("6 - SIGTERM\n");
+    printf("0 - exit.\n");
 
-    /* запоминаем предыдущий обработчик */
-    f = signal(SIGINT, handler);
-    if (f == SIG_ERR)
+    while(1)
     {
-    printf("Signal set failed.\n"); // неудача
-    return 1;
+        printf("choose!: ");
+        scanf("%d", &chc);
+
+        if (chc == 0)
+        {
+            return 0;
+        }
+        else if(chc == 1)
+        {
+            signal(SIGABRT, handler);
+            printf("raise signal\n");
+            raise(SIGABRT);
+            signal(SIGABRT, SIG_DFL);
+        }
+        else if(chc == 2)
+        {
+            signal(SIGFPE, handler);
+            printf("raise signal\n");
+            raise(SIGFPE);
+            signal(SIGFPE, SIG_DFL);
+        }
+        else if(chc == 3)
+        {
+            signal(SIGILL, handler);
+            printf("raise signal\n");
+            raise(SIGILL);
+            signal(SIGILL, SIG_DFL);
+        }
+        else if(chc == 4)
+        {
+            signal(SIGINT, handler);
+            printf("raise signal\n");
+            raise(SIGINT);
+            signal(SIGINT, SIG_DFL);
+        }
+        else if(chc == 5)
+        {
+            signal(SIGSEGV, handler);
+            printf("raise signal\n");
+            raise(SIGSEGV);
+            signal(SIGSEGV, SIG_DFL);
+        }
+        else if(chc == 6)
+        {
+            signal(SIGTERM, handler);
+            printf("raise signal\n");
+            raise(SIGTERM);
+            signal(SIGTERM, SIG_DFL);
+        }
+        else
+        {
+            printf("wrong enter!\n");
+            continue;
+        }
+        printf("OK\n");
     }
-
-    printf("Raise signal.\n");
-    if (raise(SIGINT) != 0)
-    {
-    printf("Raise failed.\n");
-    return 2;
-    }
-    printf("OK.\n");
-
-    /* восстанавливаем обработчик по умолчанию */
-    signal(SIGINT, SIG_DFL);
-
+    
     return 0;
 }
