@@ -20,7 +20,10 @@ int main()
     printf("enter primer with probel: ");
     fgets(stroka, sizeof(stroka), stdin);
 
-    size_t strlen(stroka);
+    size_t strlenn = strlen(stroka);
+    if (strlenn > 0 && stroka[strlenn-1] == '\n') {
+        stroka[strlenn-1] = '\0';
+    }
 
     token = strtok(stroka, " \t\n");
     
