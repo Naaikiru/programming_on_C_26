@@ -9,11 +9,11 @@ int main()
 
     int frst = 1;
     double res;
-    double umn;
-    char top = '+';
+    double umndel;
+    char lastop = '+';
     char vremop = '+';
     char stroka[256];
-    char token;
+    char *token;
 
     printf("enter primer with probel: ");
     fgets(stroka, sizeof(stroka), stdin);
@@ -40,7 +40,7 @@ int main()
         double vrem = atof(token);
         if (frst)
         {
-            umn = vrem;
+            umndel = vrem;
             frst = 0;
         }
         else 
@@ -49,38 +49,38 @@ int main()
             {
                 if (vremop == '*')
                 {
-                    umn = umn * vrem;
+                    umndel = umndel * vrem;
                 }
                 else
                 {
-                    umn = umn / vrem;
+                    umndel = umndel / vrem;
                 }
             }
             else
             {
-                if (top == '+')
+                if (lastop == '+')
                 {
-                    res += umn;
+                    res += umndel;
                 }
-                else if (top == '-')
+                else if (lastop == '-')
                 {
-                    res -= umn;
+                    res -= umndel;
                 }
                 
-                umn = vrem;
-                top = vremop;
+                umndel = vrem;
+                lastop = vremop;
             }
         }
         token = strtok(NULL, " ");
     }
 
-    if (top == '+')
+    if (lastop == '+')
     {
-        res += umn;
+        res += umndel;
     }
-    else if (top == '-')
+    else if (lastop == '-')
     {
-        res -= umn;
+        res -= umndel;
     }
 
     printf("= %lf", res);
