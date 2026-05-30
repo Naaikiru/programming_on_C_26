@@ -52,4 +52,4 @@ int main()
         printf("number of bits = %d\n", bit_double(num));
     }
     return 0;
-}
+} //в бинарном еще показать
