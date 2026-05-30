@@ -9,115 +9,109 @@ bkv.vvsu.ru/ftp — вай фай ввгу
 
 bkv.net.ru/ftp — не вай фай ввгу
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define MAX_TOKENS 100
+#include <math.h>
 
 int main()
 {
     printf("|| calculator ||\n");
 
+    int frst = 1;
+    int minus = 0;
+    double res = 0.0;       // текущий результат
+    double last_value = 0.0; // для отложенного умножения/деления
+    double vrem;
+    char last_op = '+';      // последняя операция с низким приоритетом (+ или -)
+    char current_op = '+';   // текущая операция (из токена)
     char stroka[256];
     char *token;
-    char *tokens[MAX_TOKENS];
-    double values[MAX_TOKENS];
-    char ops[MAX_TOKENS];
-    int count = 0;
-    int i;
+    char *prop;
 
     printf("enter primer with probel: ");
     fgets(stroka, sizeof(stroka), stdin);
 
-    size_t len = strlen(stroka);
-    if (len > 0 && stroka[len-1] == '\n') {
-        stroka[len-1] = '\0';
+    size_t strlenn = strlen(stroka);
+    if (strlenn > 0 && stroka[strlenn-1] == '\n') {
+        stroka[strlenn-1] = '\0';
     }
 
-    // 1. Разбор строки на токены
     token = strtok(stroka, " ");
-    while (token != NULL && count < MAX_TOKENS)
+    
+    while (token != NULL)
     {
-        tokens[count++] = token;
+        // Если токен — оператор
+        if (strlen(token) == 1 && (token[0] == '+' || token[0] == '-' || token[0] == '*' || token[0] == '/'))
+        {
+            current_op = token[0];
+            token = strtok(NULL, " ");
+            continue;
+        }
+
+        // Парсим число
+        vrem = 0.0;
+        minus = 0;
+
+        if (token[0] == '-')
+        {
+            minus = 1;
+            prop = token + 1;
+        }
+        else
+        {
+            prop = token;
+        }
+
+        vrem = strtod(prop, NULL);
+        if (minus)
+        {
+            vrem = -vrem;
+        }
+
+        // Первое число
+        if (frst)
+        {
+            res = vrem;
+            last_value = vrem;
+            frst = 0;
+        }
+        else
+        {
+            // Обработка с учётом приоритета
+            if (current_op == '*' || current_op == '/')
+            {
+                // Вычисляем с последним значением
+                if (current_op == '*')
+                    last_value = last_value * vrem;
+                else if (current_op == '/')
+                    last_value = last_value / vrem;
+            }
+            else // + или -
+            {
+                // Сначала применяем накопленное last_value к res
+                if (last_op == '+')
+                    res = res + last_value;
+                else if (last_op == '-')
+                    res = res - last_value;
+                
+                // Теперь last_value = текущее число
+                last_value = vrem;
+                last_op = current_op;
+            }
+        }
+
         token = strtok(NULL, " ");
     }
 
-    if (count == 0) {
-        printf("no input\n");
-        return 1;
-    }
+    // В конце применяем последнюю накопленную операцию
+    if (last_op == '+')
+        res = res + last_value;
+    else if (last_op == '-')
+        res = res - last_value;
 
-    // 2. Преобразование чисел и операций
-    double nums[MAX_TOKENS];
-    char opers[MAX_TOKENS];
-    int num_count = 0;
-    int op_count = 0;
-
-    for (i = 0; i < count; i++)
-    {
-        // Проверка, является ли токен операцией
-        if (strlen(tokens[i]) == 1 && 
-            (tokens[i][0] == '+' || tokens[i][0] == '-' || 
-             tokens[i][0] == '*' || tokens[i][0] == '/'))
-        {
-            opers[op_count++] = tokens[i][0];
-        }
-        else
-        {
-            // Иначе это число
-            nums[num_count++] = atof(tokens[i]);
-        }
-    }
-
-    // Должно быть: чисел на 1 больше, чем операций
-    if (num_count != op_count + 1) {
-        printf("error: wrong expression\n");
-        return 1;
-    }
-
-    // 3. Первый проход: * и /
-    double result = nums[0];
-    int used[MAX_TOKENS] = {0}; // для отметки "обработанных" операций
-    double new_nums[MAX_TOKENS];
-    char new_ops[MAX_TOKENS];
-    int new_num_count = 1;
-    int new_op_count = 0;
-    
-    new_nums[0] = nums[0];
-
-    for (i = 0; i < op_count; i++)
-    {
-        if (opers[i] == '*' || opers[i] == '/')
-        {
-            double a = new_nums[new_num_count - 1];
-            double b = nums[i + 1];
-            double c;
-            if (opers[i] == '*')
-                c = a * b;
-            else
-                c = a / b;
-            new_nums[new_num_count - 1] = c;
-        }
-        else
-        {
-            // + или - сохраняем для второго прохода
-            new_nums[new_num_count++] = nums[i + 1];
-            new_ops[new_op_count++] = opers[i];
-        }
-    }
-
-    // 4. Второй проход: + и -
-    double final_result = new_nums[0];
-    for (i = 0; i < new_op_count; i++)
-    {
-        if (new_ops[i] == '+')
-            final_result += new_nums[i + 1];
-        else if (new_ops[i] == '-')
-            final_result -= new_nums[i + 1];
-    }
-
-    printf("= %lf\n", final_result);
+    printf("= %lf\n", res);
     
     return 0;
 }
