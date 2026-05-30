@@ -7,7 +7,7 @@ int main()
 {
     printf("|| calculator ||\n");
 
-    //int i;
+    int i;
     int frst = 1;
     int minus = 0;
     double res = 0.0;
@@ -31,7 +31,7 @@ int main()
     {
         if (strlen(token) == 1)
         {
-            if (token[0] == '+' || token[0] == '-')
+            if (token[0] == '+' || token[0] == '-' || token[0] == '*' || token[0] == '/')
             {
                 vremop = token[0];
                 token = strtok(NULL, " ");
@@ -40,8 +40,8 @@ int main()
         }
 
         vrem = 0.0;
-        //i = 0;
         minus = 0;
+        i = 0;
 
         if (token[0] == '-')
         {
@@ -65,13 +65,24 @@ int main()
         }
         else
         {
-            if (vremop == '+')
+            for (i = 0; i < strlenn; i++)
             {
-                res += vrem;
-            }
-            else if (vremop == '-')
-            {
-                res -= vrem;
+                if (vremop == '*')
+                {
+                    res = res * vrem;
+                }
+                else if (vremop == '/')
+                {
+                    res = res / vrem;
+                }
+                else if (vremop == '+')
+                {
+                    res += vrem;
+                }
+                else if (vremop == '-')
+                {
+                    res -= vrem;
+                }
             }
         }
         token = strtok(NULL, " ");
