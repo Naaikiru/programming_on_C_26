@@ -7,17 +7,13 @@ int main()
 {
     printf("|| calculator ||\n");
 
-    //int i;
     int frst = 1;
-    int minus = 0;
-    double res = 0.0;
-    double umn = 0.0;
-    double vrem;
+    double res;
+    double umn;
     char top = '+';
     char vremop = '+';
     char stroka[256];
-    char *token;
-    char *prop;
+    char token;
 
     printf("enter primer with probel: ");
     fgets(stroka, sizeof(stroka), stdin);
@@ -41,31 +37,13 @@ int main()
             }
         }
 
-        vrem = 0.0;
-        minus = 0;
-
-        if (token[0] == '-')
-        {
-            minus = 1;
-            prop = token + 1;
-        }
-        else
-        {
-            prop = token;
-        }
-
-        vrem = strtod(prop, NULL);
-        if (minus)
-        {
-            vrem = -vrem;
-        }
+        double vrem = atof(token);
         if (frst)
         {
-            res = vrem;
             umn = vrem;
             frst = 0;
         }
-        else
+        else 
         {
             if (vremop == '*' || vremop == '/')
             {
@@ -73,7 +51,7 @@ int main()
                 {
                     umn = umn * vrem;
                 }
-                else if (vremop == '/')
+                else
                 {
                     umn = umn / vrem;
                 }
@@ -88,11 +66,10 @@ int main()
                 {
                     res -= umn;
                 }
-
+                
                 umn = vrem;
                 top = vremop;
             }
-
         }
         token = strtok(NULL, " ");
     }
@@ -107,6 +84,6 @@ int main()
     }
 
     printf("= %lf", res);
-    
+
     return 0;
 }
