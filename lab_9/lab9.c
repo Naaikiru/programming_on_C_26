@@ -7,11 +7,13 @@ int main()
 {
     printf("|| calculator ||\n");
 
-    int i;
+    //int i;
     int frst = 1;
     int minus = 0;
     double res = 0.0;
+    double umn = 0.0;
     double vrem;
+    char top = '+';
     char vremop = '+';
     char stroka[256];
     char *token;
@@ -41,7 +43,6 @@ int main()
 
         vrem = 0.0;
         minus = 0;
-        i = 0;
 
         if (token[0] == '-')
         {
@@ -61,31 +62,48 @@ int main()
         if (frst)
         {
             res = vrem;
+            umn = vrem;
             frst = 0;
         }
         else
         {
-            for (i = 0; i < strlenn; i++)
+            if (vremop == '*' || vremop == '/')
             {
                 if (vremop == '*')
                 {
-                    res = res * vrem;
+                    umn = umn * vrem;
                 }
                 else if (vremop == '/')
                 {
-                    res = res / vrem;
-                }
-                else if (vremop == '+')
-                {
-                    res += vrem;
-                }
-                else if (vremop == '-')
-                {
-                    res -= vrem;
+                    umn = umn / vrem;
                 }
             }
+            else
+            {
+                if (top == '+')
+                {
+                    res += umn;
+                }
+                else if (top == '-')
+                {
+                    res -= umn;
+                }
+
+                umn = vrem;
+                top = vremop;
+            }
+
         }
         token = strtok(NULL, " ");
+    }
+
+    if (top == '+')
+    {
+        res += umn;
+    }
+    else if (top == '-')
+    {
+        res -= umn;
     }
 
     printf("= %lf", res);
