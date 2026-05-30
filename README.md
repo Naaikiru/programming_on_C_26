@@ -19,13 +19,14 @@ int main()
 {
     printf("|| calculator ||\n");
 
+    //int i;
     int frst = 1;
     int minus = 0;
-    double res = 0.0;       // текущий результат
-    double last_value = 0.0; // для отложенного умножения/деления
+    double res = 0.0;
+    double umn = 0.0;
     double vrem;
-    char last_op = '+';      // последняя операция с низким приоритетом (+ или -)
-    char current_op = '+';   // текущая операция (из токена)
+    char top = '+';
+    char vremop = '+';
     char stroka[256];
     char *token;
     char *prop;
@@ -42,15 +43,16 @@ int main()
     
     while (token != NULL)
     {
-        // Если токен — оператор
-        if (strlen(token) == 1 && (token[0] == '+' || token[0] == '-' || token[0] == '*' || token[0] == '/'))
+        if (strlen(token) == 1)
         {
-            current_op = token[0];
-            token = strtok(NULL, " ");
-            continue;
+            if (token[0] == '+' || token[0] == '-' || token[0] == '*' || token[0] == '/')
+            {
+                vremop = token[0];
+                token = strtok(NULL, " ");
+                continue;
+            }
         }
 
-        // Парсим число
         vrem = 0.0;
         minus = 0;
 
@@ -69,49 +71,51 @@ int main()
         {
             vrem = -vrem;
         }
-
-        // Первое число
         if (frst)
         {
             res = vrem;
-            last_value = vrem;
+            umn = vrem;
             frst = 0;
         }
         else
         {
-            // Обработка с учётом приоритета
-            if (current_op == '*' || current_op == '/')
+            if (vremop == '*' || vremop == '/')
             {
-                // Вычисляем с последним значением
-                if (current_op == '*')
-                    last_value = last_value * vrem;
-                else if (current_op == '/')
-                    last_value = last_value / vrem;
+                if (vremop == '*')
+                {
+                    umn = umn * vrem;
+                }
+                else if (vremop == '/')
+                {
+                    umn = umn / vrem;
+                }
             }
-            else // + или -
+            else
             {
-                // Сначала применяем накопленное last_value к res
-                if (last_op == '+')
-                    res = res + last_value;
-                else if (last_op == '-')
-                    res = res - last_value;
-                
-                // Теперь last_value = текущее число
-                last_value = vrem;
-                last_op = current_op;
+                if (top == '+')
+                {
+                    res += umn;
+                }
+                else if (top == '-')
+                {
+                    res -= umn;
+                }
             }
-        }
 
+        }
         token = strtok(NULL, " ");
     }
 
-    // В конце применяем последнюю накопленную операцию
-    if (last_op == '+')
-        res = res + last_value;
-    else if (last_op == '-')
-        res = res - last_value;
+    if (umn == '+')
+    {
+        res += umn;
+    }
+    else if (umn == '-')
+    {
+        res -= umn;
+    }
 
-    printf("= %lf\n", res);
+    printf("= %lf", res);
     
     return 0;
 }
