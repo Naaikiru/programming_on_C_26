@@ -9,7 +9,7 @@ int main()
 
     int frst = 1;
     double res;
-    double umndel;
+    double lstvrem;
     char lastop = '+';
     char vremop = '+';
     char stroka[256];
@@ -40,7 +40,7 @@ int main()
         double vrem = atof(token);
         if (frst)
         {
-            umndel = vrem;
+            lstvrem = vrem;
             frst = 0;
         }
         else 
@@ -49,25 +49,25 @@ int main()
             {
                 if (vremop == '*')
                 {
-                    umndel = umndel * vrem;
+                    lstvrem = lstvrem * vrem;
                 }
                 else
                 {
-                    umndel = umndel / vrem;
+                    lstvrem = lstvrem / vrem;
                 }
             }
             else
             {
-                if (lastop == '+')
+                if (vremop == '+')
                 {
-                    res += umndel;
+                    res += lstvrem;
                 }
-                else if (lastop == '-')
+                else if (vremop == '-')
                 {
-                    res -= umndel;
+                    res -= lstvrem;
                 }
                 
-                umndel = vrem;
+                lstvrem = vrem;
                 lastop = vremop;
             }
         }
@@ -76,11 +76,11 @@ int main()
 
     if (lastop == '+')
     {
-        res += umndel;
+        res += lstvrem;
     }
     else if (lastop == '-')
     {
-        res -= umndel;
+        res -= lstvrem;
     }
 
     printf("= %lf", res);
