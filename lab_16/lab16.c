@@ -28,7 +28,36 @@ int bit_double(double num)
     }
     return cunt;
 }
+  
+void print_long(long num)
+{
+    if (num == 0)
+    {
+        printf("0");
+        return;
+    }
+    if (num > 1)
+        print_long(num / 2);
+    printf("%d", num % 2);
+}
 
+void print_double(double num)
+{
+    unsigned char *ptr = (unsigned char*)&num;
+    int i, bit;
+    
+    for(i = sizeof(double) - 1; i >= 0; i--)
+    {
+        for(bit = 7; bit >= 0; bit--)
+        {
+            if(ptr[i] & (1 << bit))
+                printf("1");
+            else
+                printf("0");
+        }
+        printf(" ");
+    }
+}
 
 int main()
 {
@@ -41,7 +70,9 @@ int main()
         long num;
         printf("enter number with type long: ");
         scanf("%ld", &num);
-        printf("number of bits = %d\n", bit_long(num));
+        printf("binary: ");
+        print_long(num);
+        printf("\nnumber of bits = %d\n", bit_long(num));
     }
 
     else if (chc == 2)
@@ -49,7 +80,9 @@ int main()
         double num;
         printf("enter number with type double: ");
         scanf("%lf", &num);
-        printf("number of bits = %d\n", bit_double(num));
+        printf("binary: ");
+        print_double(num);
+        printf("\nnumber of bits = %d\n", bit_double(num));
     }
     return 0;
 } //в бинарном еще показать
