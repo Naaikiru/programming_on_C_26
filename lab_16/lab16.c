@@ -43,14 +43,14 @@ void print_long(long num)
 
 void print_double(double num)
 {
-    unsigned char *ptr = (unsigned char*)&num;
+    unsigned char *numnum = (unsigned char*)&num;
     int i, bit;
     
     for(i = sizeof(double) - 1; i >= 0; i--)
     {
         for(bit = 7; bit >= 0; bit--)
         {
-            if(ptr[i] & (1 << bit))
+            if(numnum[i] & (1 << bit))
                 printf("1");
             else
                 printf("0");
@@ -85,4 +85,4 @@ int main()
         printf("\nnumber of bits = %d\n", bit_double(num));
     }
     return 0;
-} //в бинарном еще показать
+} 
