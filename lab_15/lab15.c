@@ -19,16 +19,16 @@ void invert_v(int n) {
 }
 
 int main() {
-    int N;
-    printf("Введите натуральное число: ");
-    scanf("%d", &N);
+    int n;
+    printf("please enter natural namber = ");
+    scanf("%d", &n);
 
-    printf("В прямом порядке: ");
-    comm_v(N);
+    printf("the numbers are one at a time, in the usual order: ");
+    comm_v(n);
     printf("\n");
 
     printf("В обратном порядке: ");
-    invert_v(N);
+    invert_v(n);
     printf("\n");
 
     return 0;
