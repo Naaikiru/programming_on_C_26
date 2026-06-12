@@ -25,11 +25,9 @@ int main() {
 
     printf("the numbers are one at a time, in the usual order: ");
     comm_v(n);
-    printf("\n");
 
-    printf("В обратном порядке: ");
+    printf("\nin the opposite direction: ");
     invert_v(n);
-    printf("\n");
 
     return 0;
 }
