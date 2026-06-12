@@ -5,13 +5,13 @@
 
 jmp_buf env = {0};
 
-void form(int n, int x, int y, int fib)
+void form(int n, int x, int y, int sum)
 {
 	if (n == 0)
     {
-		longjmp(env, fib);
+		longjmp(env, sum);
 	}
-	form(n - 1, y, x + y, fib + x); 
+	form(n - 1, y, x + y, sum + x); 
 }
 
 int main() 
