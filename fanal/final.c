@@ -2,174 +2,207 @@
 #include <stdlib.h>
 #include <time.h>
 
-// Функция создания квадратной матрицы m x m со случайными числами 0-9
-void createMatrix(int m, int matrix[m][m]) {
-    for (int i = 0; i < m; i++)
+// 1. Заполняет матрицу случайными числами от 0 до 20
+void createMatrix(int n, int m, int matrix[n][m]) {
+    for (int i = 0; i < n; i++)
         for (int j = 0; j < m; j++)
-            matrix[i][j] = rand() % 10;
+            matrix[i][j] = rand() % 21;
 }
 
-// Функция подсчёта суммы всех элементов матрицы
-int sumMatrix(int m, int matrix[m][m]) {
-    int sum = 0;
-    for (int i = 0; i < m; i++)
-        for (int j = 0; j < m; j++)
-            sum += matrix[i][j];
-    return sum;
-}
-
-// Функция вывода матрицы в файл
-void printMatrix(FILE *f, int m, int matrix[m][m]) {
-    for (int i = 0; i < m; i++) {
+// 2. Выводит матрицу в файл
+void printMatrix(FILE *f, int n, int m, int matrix[n][m]) {
+    for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++)
             fprintf(f, "%d ", matrix[i][j]);
         fprintf(f, "\n");
     }
 }
 
+// 3. Складывает две матрицы
+void addMatrices(int n, int m, int a[n][m], int b[n][m], int result[n][m]) {
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            result[i][j] = a[i][j] + b[i][j];
+}
+
+// 4. Умножает две квадратные матрицы
+void multiplyMatrices(int n, int a[n][n], int b[n][n], int result[n][n]) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            result[i][j] = 0;
+            for (int k = 0; k < n; k++)
+                result[i][j] += a[i][k] * b[k][j];
+        }
+    }
+}
+
+// 5. Находит минимальный элемент и считает нечётные числа
+void findMinAndOdd(int n, int m, int matrix[n][m]) {
+    int min = matrix[0][0];
+    int odd_count = 0;
+    
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (matrix[i][j] < min)
+                min = matrix[i][j];
+            if (matrix[i][j] % 2 != 0)
+                odd_count++;
+        }
+    }
+    
+    printf("\n--- Анализ первой матрицы ---\n");
+    printf("Минимальный элемент: %d\n", min);
+    printf("Количество нечётных чисел: %d\n", odd_count);
+}
+
+// 6. Проверяет, есть ли строка или столбец с одинаковыми числами
+void findSameRowCol(int n, int m, int matrix[n][m]) {
+    int found = 0;
+    
+    // Проверяем строки
+    for (int i = 0; i < n; i++) {
+        int same = 1;
+        for (int j = 1; j < m; j++) {
+            if (matrix[i][j] != matrix[i][0]) {
+                same = 0;
+                break;
+            }
+        }
+        if (same) {
+            printf("Строка %d состоит из одинаковых чисел\n", i);
+            found = 1;
+        }
+    }
+    
+    // Проверяем столбцы
+    for (int j = 0; j < m; j++) {
+        int same = 1;
+        for (int i = 1; i < n; i++) {
+            if (matrix[i][j] != matrix[0][j]) {
+                same = 0;
+                break;
+            }
+        }
+        if (same) {
+            printf("Столбец %d состоит из одинаковых чисел\n", j);
+            found = 1;
+        }
+    }
+    
+    if (!found)
+        printf("Нет строк или столбцов с одинаковыми числами\n");
+}
+
 int main() {
     clock_t start, end;
     start = clock();
     
+    int n, m;
     srand(time(NULL));
     
-    // --- 1. Расчёт количества дней до даты ---
-    FILE *f = fopen("input.txt", "r");
+    // Просим пользователя ввести размер матриц
+    printf("Введите размер матриц (строки столбцы): ");
+    scanf("%d %d", &n, &m);
+    
+    int a[n][m], b[n][m];
+    
+    // Создаём две матрицы со случайными числами
+    createMatrix(n, m, a);
+    createMatrix(n, m, b);
+    
+    // Записываем матрицы в файл input.txt
+    FILE *f = fopen("input.txt", "w");
     if (f == NULL) {
-        printf("Ошибка: файл input.txt не найден!\n");
+        printf("Ошибка создания input.txt\n");
         return 1;
     }
     
-    int day, month, year;
-    fscanf(f, "%d %d %d", &day, &month, &year);
+    // Первая матрица
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++)
+            fprintf(f, "%d ", a[i][j]);
+        fprintf(f, "\n");
+    }
+    fprintf(f, "\n");
+    
+    // Вторая матрица
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++)
+            fprintf(f, "%d ", b[i][j]);
+        fprintf(f, "\n");
+    }
+    fclose(f);
+    printf("Файл input.txt создан\n");
+    
+    // Очищаем матрицы (для примера)
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            a[i][j] = 0;
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            b[i][j] = 0;
+    printf("Матрицы очищены\n");
+    
+    // Читаем матрицы из файла обратно
+    f = fopen("input.txt", "r");
+    if (f == NULL) {
+        printf("Ошибка открытия input.txt\n");
+        return 1;
+    }
+    
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            fscanf(f, "%d", &a[i][j]);
+    
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            fscanf(f, "%d", &b[i][j]);
     fclose(f);
     
-    // Проверяем корректность даты
-    if (day < 1 || day > 31 || month < 1 || month > 12 || year < 2025) {
-        printf("Некорректная дата в файле!\n");
-        return 1;
+    // Складываем матрицы
+    int sum[n][m];
+    addMatrices(n, m, a, b, sum);
+    
+    // Умножаем матрицы (только если они квадратные)
+    int prod[n][m];
+    if (n == m) {
+        multiplyMatrices(n, a, b, prod);
     }
     
-    // Количество дней в каждом месяце (не високосный год)
-    int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    
-    // Проверка на високосный год
-    int leap = 0;
-    if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
-        leap = 1;
-    if (leap) daysInMonth[1] = 29;
-    
-    // Текущая дата: 13 июня 2026 года (сегодня)
-    int curDay = 13, curMonth = 6, curYear = 2026;
-    
-    // Если введённая дата раньше сегодняшней
-    if (year < curYear || (year == curYear && month < curMonth) || 
-        (year == curYear && month == curMonth && day < curDay)) {
-        printf("Дата должна быть не раньше сегодняшней (13.06.2026)!\n");
-        return 1;
-    }
-    
-    int totalDays = 0;
-    
-    // Считаем дни от текущей даты до указанной
-    // Сначала от сегодня до конца года
-    if (year == curYear) {
-        // Тот же год
-        if (month == curMonth) {
-            totalDays = day - curDay;
-        } else {
-            // Остаток дней в текущем месяце
-            totalDays += daysInMonth[curMonth - 1] - curDay;
-            // Полные месяцы между
-            for (int m = curMonth + 1; m < month; m++)
-                totalDays += daysInMonth[m - 1];
-            // Дни в целевом месяце
-            totalDays += day;
-        }
-    } else {
-        // Дни от сегодня до конца текущего года
-        totalDays += daysInMonth[curMonth - 1] - curDay;
-        for (int m = curMonth + 1; m <= 12; m++)
-            totalDays += daysInMonth[m - 1];
-        
-        // Полные годы между
-        for (int y = curYear + 1; y < year; y++) {
-            if ((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0))
-                totalDays += 366;
-            else
-                totalDays += 365;
-        }
-        
-        // Дни в целевом году до указанного месяца
-        for (int m = 1; m < month; m++) {
-            // Обновляем високосность для целевого года
-            int leapYear = 0;
-            if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
-                leapYear = 1;
-            int dim = (m == 2 && leapYear) ? 29 : daysInMonth[m - 1];
-            totalDays += dim;
-        }
-        totalDays += day;
-    }
-    
-    printf("Дней до указанной даты: %d\n", totalDays);
-    
-    // --- 2-3. Создание матриц до совпадения сумм ---
-    int m;
-    printf("Введите размер матрицы m: ");
-    scanf("%d", &m);
-    
-    if (m <= 0) {
-        printf("Размер должен быть положительным!\n");
-        return 1;
-    }
-    
+    // Записываем результаты в output.txt
     FILE *out = fopen("output.txt", "w");
     if (out == NULL) {
         printf("Ошибка создания output.txt\n");
         return 1;
     }
     
-    fprintf(out, "Дата в input.txt: %02d.%02d.%04d\n", day, month, year);
-    fprintf(out, "Дней до даты: %d\n\n", totalDays);
+    fprintf(out, "=== Исходные матрицы ===\n\n");
+    fprintf(out, "Матрица A:\n");
+    printMatrix(out, n, m, a);
+    fprintf(out, "\nМатрица B:\n");
+    printMatrix(out, n, m, b);
     
-    int matrix1[m][m], matrix2[m][m];
-    int sum1, sum2;
-    int count = 0;
+    fprintf(out, "\n=== Результаты операций ===\n\n");
+    fprintf(out, "Сумма матриц:\n");
+    printMatrix(out, n, m, sum);
     
-    fprintf(out, "--- Поиск двух матриц с одинаковой суммой ---\n");
-    
-    do {
-        // Создаём первую матрицу
-        createMatrix(m, matrix1);
-        sum1 = sumMatrix(m, matrix1);
-        
-        // Создаём вторую матрицу
-        createMatrix(m, matrix2);
-        sum2 = sumMatrix(m, matrix2);
-        
-        count++;
-        
-        if (count % 1000 == 0) {
-            printf("Создано %d пар матриц...\n", count);
-        }
-        
-    } while (sum1 != sum2);
-    
-    printf("Найдено совпадение после %d попыток!\n", count);
-    fprintf(out, "Найдено совпадение после %d попыток\n", count);
-    fprintf(out, "\nПервая матрица (сумма = %d):\n", sum1);
-    printMatrix(out, m, matrix1);
-    fprintf(out, "\nВторая матрица (сумма = %d):\n", sum2);
-    printMatrix(out, m, matrix2);
-    
+    if (n == m) {
+        fprintf(out, "\nПроизведение матриц:\n");
+        printMatrix(out, n, m, prod);
+    } else {
+        fprintf(out, "\nУмножение невозможно (матрицы не квадратные)\n");
+    }
     fclose(out);
     printf("Результаты записаны в output.txt\n");
     
-    // --- 4. Замер времени ---
+    // Анализируем первую матрицу
+    findMinAndOdd(n, m, a);
+    findSameRowCol(n, m, a);
+    
+    // Выводим время работы программы
     end = clock();
     double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
-    printf("Время работы программы: %.3f секунд\n", time_spent);
+    printf("\nВремя работы программы: %.3f секунд\n", time_spent);
     
     return 0;
 }
